@@ -25,6 +25,11 @@ const projects = [
   },
 ];
 
+const cardVariants = {
+  initial: { opacity: 0, y: 20, rotateX: -6 },
+  whileInView: { opacity: 1, y: 0, rotateX: 0 },
+};
+
 export default function Projects() {
   return (
     <section id="projects" className="relative py-24 bg-slate-950">
@@ -35,15 +40,16 @@ export default function Projects() {
           <p className="mt-3 text-slate-400">A few projects that highlight my approach to craft, interactivity, and clarity.</p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 perspective-1000">
           {projects.map((p, i) => (
             <motion.article
               key={p.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial="initial"
+              whileInView="whileInView"
               viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: i * 0.05 }}
-              className="group rounded-xl border border-white/10 bg-white/5 p-5 hover:border-white/20 hover:bg-white/10 transition"
+              transition={{ duration: 0.6, delay: i * 0.06, ease: 'easeOut' }}
+              variants={cardVariants}
+              className="group rounded-xl border border-white/10 bg-white/5 p-5 hover:border-white/20 hover:bg-white/10 transition will-change-transform"
             >
               <div className="flex items-start justify-between gap-4">
                 <h3 className="text-lg font-semibold text-white">{p.title}</h3>
@@ -64,6 +70,11 @@ export default function Projects() {
                   </span>
                 ))}
               </div>
+              <motion.div
+                className="mt-4 h-28 rounded-lg bg-gradient-to-br from-white/5 to-white/0 border border-white/10"
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: 'spring', stiffness: 250, damping: 18 }}
+              />
             </motion.article>
           ))}
         </div>
